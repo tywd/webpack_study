@@ -2,18 +2,16 @@
  * @Author: shichuyu
  * @Date: 2020-09-15 11:05:29
  * @LastEditors: shichuyu
- * @LastEditTime: 2020-09-15 11:11:58
+ * @LastEditTime: 2020-09-21 19:18:42
  * @Description: 
 -->
 
 # webpack
 
-webpack study
+webpack_first首次学习
 
 ### webpack 学习记录
 
-### 分支名
+### 学习地址
 
-[webpack_other](https://github.com/shichuyu/webpack/tree/webpack_other)
-
-[webpack_study](https://github.com/shichuyu/webpack/tree/webpack_study)
+[webpack_first](https://mp.weixin.qq.com/s/OBUcxEFXKQQubP08LO2Uhg)

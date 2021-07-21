@@ -31,11 +31,15 @@ module.exports = {
             {
                 test: /\.(le|c|sc)ss$/,
                 use: ['style-loader', 'css-loader', {
-                    loader: 'postcss-loader',
+                    loader: 'postcss-loader', // 为css添加浏览器前缀
                     options: {
                         plugins: function () {
                             return [
-                                require('autoprefixer')()
+                                require('autoprefixer')() // 引入autoprefixer使其生效，
+                                // 或者在根目录新建个postcss.config.js 配置
+                                // module.exports = {
+                                //     plugins: [require('autoprefixer')]  // 引用该插件即可了
+                                // }
                             ]
                         }
                     }

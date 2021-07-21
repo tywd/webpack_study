@@ -1,6 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 每次文件修改后，重新打包，导致 dist 目录下的文件越来越多。要是每次打包前，都会帮我们先清空一下目录
+const {
+    CleanWebpackPlugin
+} = require('clean-webpack-plugin'); // 每次文件修改后，重新打包，导致 dist 目录下的文件越来越多。要是每次打包前，都会帮我们先清空一下目录
 const isDev = process.env.NODE_ENV === 'development';
 const config = require('./public/config')[isDev ? 'dev' : 'build'];
 console.log(config)
@@ -13,19 +15,24 @@ module.exports = {
         publicPath: '/' //通常是CDN地址
     },
     devServer: {
-      port: '3000', //默认是8080
-      quiet: false, //默认不启用 除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见
-      inline: true, //默认开启 inline 模式，如果设置为false,开启 iframe 模式
-      stats: "errors-only", //终端仅打印 error。 当启用了 quiet 或者是 noInfo 时，此属性不起作用。
-      overlay: false, //默认不启用 当编译出错时，会在浏览器窗口全屏输出错误
-      clientLogLevel: "silent", //日志等级
-      compress: true //是否启用 gzip 压缩
+        port: '3000', //默认是8080
+        quiet: false, //默认不启用 除了初始启动信息之外的任何内容都不会被打印到控制台。这也意味着来自 webpack 的错误或警告在控制台不可见
+        inline: true, //默认开启 inline 模式，如果设置为false,开启 iframe 模式
+        stats: "errors-only", //终端仅打印 error。 当启用了 quiet 或者是 noInfo 时，此属性不起作用。
+        overlay: false, //默认不启用 当编译出错时，会在浏览器窗口全屏输出错误
+        clientLogLevel: "silent", //日志等级
+        compress: true //是否启用 gzip 压缩
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.jsx?$/,
                 use: ['babel-loader'],
+                // use: { // ES6/7/8语法转换为ES5语法 对新api并不会转换 例如(promise、Generator、Set、Maps、Proxy等需使用babel-polyfill)
+                //     loader: 'babel-loader',
+                //     options: {
+                //         presets: ['@babel/preset-env']
+                //     }
+                // },
                 exclude: /node_modules/ //排除 node_modules 目录
             },
             {
@@ -43,7 +50,7 @@ module.exports = {
                             ]
                         }
                     }
-                }, 'less-loader','sass-loader'], 
+                }, 'less-loader', 'sass-loader'],
                 // loader 的执行顺序是从右向左执行的，也就是后面的 loader 先执行
                 exclude: /node_modules/
             },
@@ -53,17 +60,15 @@ module.exports = {
             // },
             {
                 test: /\.(png|jpg|gif|jpeg|webp|svg|eot|ttf|woff|woff2)$/,
-                use: [
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 10240, // 资源大小小于 10K 时，将资源转换为 base64，超过 10K，将图片拷贝到 dist 目录。
-                            esModule: false, // esModule 设置为 false，否则，<img src={require('XXX.jpg')} /> 会出现 <img src=[Module Object] />
-                            name: '[name]_[hash:6].[ext]', // 图片名称，也可不加name，默认自己给
-                            outputPath: 'assets' // 将图片打包在一个文件夹下
-                        }
+                use: [{
+                    loader: 'url-loader',
+                    options: {
+                        limit: 10240, // 资源大小小于 10K 时，将资源转换为 base64，超过 10K，将图片拷贝到 dist 目录。
+                        esModule: false, // esModule 设置为 false，否则，<img src={require('XXX.jpg')} /> 会出现 <img src=[Module Object] />
+                        name: '[name]_[hash:6].[ext]', // 图片名称，也可不加name，默认自己给
+                        outputPath: 'assets' // 将图片打包在一个文件夹下
                     }
-                ],
+                }],
                 exclude: /node_modules/
             }
         ]
@@ -79,7 +84,7 @@ module.exports = {
         }),
         // 不需要传参数，它可以找到 outputPath
         new CleanWebpackPlugin({
-            cleanOnceBeforeBuildPatterns:['**/*', '!dll', '!dll/**'] //但希望不删除某个目录的文件也可，例：dll目录下的文件
+            cleanOnceBeforeBuildPatterns: ['**/*', '!dll', '!dll/**'] //但希望不删除某个目录的文件也可，例：dll目录下的文件
         })
     ]
 }

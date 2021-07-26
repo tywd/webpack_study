@@ -11,7 +11,11 @@
 
 ## webpack 学习记录
 webpack_first首次学习
+> branch -> webpack_study_first
+
+webpack_second学习进阶
+> branch -> webpack_study_second
 
 ### 学习地址
-
-[webpack_first](https://mp.weixin.qq.com/s/OBUcxEFXKQQubP08LO2Uhg)
+[webpack_first](https://mp.weixin.qq.com/s/OBUcxEFXKQQubP08LO
+[webpack_second](https://juejin.cn/post/6844904084927938567)

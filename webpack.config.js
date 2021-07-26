@@ -4,6 +4,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // 每次文件�
 const isDev = process.env.NODE_ENV === 'development';
 const config = require('./public/config')[isDev ? 'dev' : 'build'];
 console.log(config)
+const CopyWebpackPlugin = require('copy-webpack-plugin'); // 将单个文件或整个目录复制到构建目录。
 module.exports = {
     mode: isDev ? 'development' : 'production',
     entry: './src/index.js',
@@ -100,6 +101,15 @@ module.exports = {
         // 不需要传参数，它可以找到 outputPath
         new CleanWebpackPlugin({
             cleanOnceBeforeBuildPatterns:['**/*', '!dll', '!dll/**'] //但希望不删除某个目录的文件也可，例：dll目录下的文件
+        }),
+        new CopyWebpackPlugin([
+            {
+                from: 'public/js/*.js',
+                to: path.resolve(__dirname, 'dist', 'js'),
+                flatten: true,
+            }
+        ], {
+            ignore: ['other.js']
         })
     ]
 }

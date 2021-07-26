@@ -24,8 +24,21 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                use: ['babel-loader'],
+                test: /\.jsx?$/, // 匹配规则，针对符合规则的文件进行处理
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ["@babel/preset-env"],
+                        plugins: [
+                            [
+                                "@babel/plugin-transform-runtime",
+                                {
+                                    "corejs": 3
+                                }
+                            ]
+                        ]
+                    }
+                },
                 exclude: /node_modules/ //排除 node_modules 目录
             },
             {
@@ -37,10 +50,17 @@ module.exports = {
                             return [
                                 require('autoprefixer')()
                             ]
+                            /*  根目录下创建 .browserslistrc文件  将对应的规则写在此文件中，除了 autoprefixer 使用外，@babel/preset-env、stylelint、eslint-plugin-conmpat 等都可以共用。
+                            require('autoprefixer')({
+                                "overrideBrowserslist": [
+                                    ">0.25%",
+                                    "not dead"
+                                ]
+                            }) */
                         }
                     }
                 }, 'less-loader','sass-loader'], 
-                // loader 的执行顺序是从右向左执行的，也就是后面的 loader 先执行
+                // loader 的执行顺序是从右向左执行的，也就是后面的 loader 先执行，也可用enforce参数改变优先级
                 exclude: /node_modules/
             },
             // {
@@ -70,7 +90,11 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: './public/index.html',
             filename: 'index.html', //打包后的文件名
-            config: config.template
+            config: config.template,
+            minify: {
+                removeAttributeQuotes: false, //是否删除属性的双引号
+                collapseWhitespace: false, //是否折叠空白
+            },
             // hash: true //是否加上hash，默认是 false
         }),
         // 不需要传参数，它可以找到 outputPath

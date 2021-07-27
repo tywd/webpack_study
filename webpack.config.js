@@ -65,13 +65,8 @@ module.exports = {
                             }) */
                         }
                     }
-<<<<<<< HEAD
-                }, 'less-loader', 'sass-loader'],
-                // loader 的执行顺序是从右向左执行的，也就是后面的 loader 先执行
-=======
                 }, 'less-loader','sass-loader'], 
                 // loader 的执行顺序是从右向左执行的，也就是后面的 loader 先执行，也可用enforce参数改变优先级
->>>>>>> 6a456a20d9080a4025db385d7962f9702cf31961
                 exclude: /node_modules/
             },
             // {
